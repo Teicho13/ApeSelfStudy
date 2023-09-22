@@ -2,6 +2,7 @@
 
 
 #include "PlayerCharacter.h"
+#include "InputActionValue.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -19,6 +20,14 @@ void APlayerCharacter::BeginPlay()
 	check(GEngine != nullptr);
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCharacter."));
+}
+
+void APlayerCharacter::Move(const FInputActionValue& aValue)
+{
+}
+
+void APlayerCharacter::MoveSide(const FInputActionValue& aValue)
+{
 }
 
 // Called every frame

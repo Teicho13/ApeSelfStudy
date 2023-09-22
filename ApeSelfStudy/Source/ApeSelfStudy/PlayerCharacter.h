@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+
+struct FInputActionValue;
+
 UCLASS()
 class APESELFSTUDY_API APlayerCharacter : public ACharacter
 {
@@ -18,6 +21,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void Move(const FInputActionValue& aValue);
+
+	void MoveSide(const FInputActionValue& aValue);
 
 public:	
 	// Called every frame
