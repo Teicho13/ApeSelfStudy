@@ -3,11 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
 #include "GameFramework/Character.h"
+
+//Needs to be last
 #include "PlayerCharacter.generated.h"
 
+class UInputAction;
+class UInputMappingContext;
 
-struct FInputActionValue;
 
 UCLASS()
 class APESELFSTUDY_API APlayerCharacter : public ACharacter
@@ -17,20 +21,22 @@ class APESELFSTUDY_API APlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	void Move(const FInputActionValue& aValue);
-
-	void MoveSide(const FInputActionValue& aValue);
-
-public:	
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	void Jump(const FInputActionValue& value);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputMappingContext* PlayerMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* JumpAction;
 };

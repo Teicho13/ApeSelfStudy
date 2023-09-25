@@ -2,7 +2,9 @@
 
 
 #include "PlayerCharacter.h"
-#include "InputActionValue.h"
+
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -20,14 +22,20 @@ void APlayerCharacter::BeginPlay()
 	check(GEngine != nullptr);
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCharacter."));
+
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			Subsystem->AddMappingContext(PlayerMappingContext, 0);
+		}
+	}
+
 }
 
-void APlayerCharacter::Move(const FInputActionValue& aValue)
+void APlayerCharacter::Jump(const FInputActionValue& value)
 {
-}
-
-void APlayerCharacter::MoveSide(const FInputActionValue& aValue)
-{
+	GEngine->AddOnScreenDebugMessage(1, 5.0f, FColor::Red, TEXT("Jump"));
 }
 
 // Called every frame
@@ -37,9 +45,16 @@ void APlayerCharacter::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
-void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// Set up action bindings
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
+		
+		//Jumping
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Jump);
+	}
+	
 }
 
