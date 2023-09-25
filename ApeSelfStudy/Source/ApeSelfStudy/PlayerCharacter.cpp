@@ -35,7 +35,21 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::Jump(const FInputActionValue& value)
 {
-	GEngine->AddOnScreenDebugMessage(1, 5.0f, FColor::Red, TEXT("Jump"));
+	ACharacter::Jump();
+}
+
+void APlayerCharacter::Move(const FInputActionValue& value)
+{
+	const FVector2d movementVector = value.Get<FVector2d>();
+
+	const FRotator rotation = GetController()->GetControlRotation();
+	const FRotator yawRotation(0.f,rotation.Yaw,0.f);
+
+	const FVector forwardDirection = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(forwardDirection, movementVector.Y);
+
+	const FVector rightDirection = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(rightDirection, movementVector.X);
 }
 
 // Called every frame
@@ -54,6 +68,8 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		
 		//Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Jump);
+		//Directional movement
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 	}
 	
 }

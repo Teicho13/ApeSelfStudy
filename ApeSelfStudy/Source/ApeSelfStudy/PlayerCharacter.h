@@ -33,10 +33,14 @@ protected:
 	virtual void BeginPlay() override;
 
 	void Jump(const FInputActionValue& value);
+	void Move(const FInputActionValue& value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputMappingContext* PlayerMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* JumpAction;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* MoveAction;
 };
