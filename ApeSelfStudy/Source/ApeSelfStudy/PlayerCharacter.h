@@ -35,6 +35,7 @@ protected:
 	void Jump(const FInputActionValue& value);
 	void Move(const FInputActionValue& value);
 
+	/* MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputMappingContext* PlayerMappingContext;
 
