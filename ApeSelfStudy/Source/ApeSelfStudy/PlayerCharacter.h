@@ -13,6 +13,18 @@ class UInputAction;
 class UInputMappingContext;
 
 
+UENUM(BlueprintType)
+enum class EGadgets : uint8 {
+	E_None       UMETA(DisplayName="None"),
+	E_StunClub       UMETA(DisplayName="Stun Club"),
+	E_TimeNet        UMETA(DisplayName="Time Net"),
+	E_MonkeyRadar        UMETA(DisplayName="Monkey Radar"),
+	E_SlingShot        UMETA(DisplayName="Slingshot"),
+	E_Hoop        UMETA(DisplayName="Hoop")
+};
+
+
+
 UCLASS()
 class APESELFSTUDY_API APlayerCharacter : public ACharacter
 {
@@ -44,4 +56,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= Gadgets)
+	EGadgets EquipedGadget;
+	
 };
