@@ -5,6 +5,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Gadgets/Gadget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -23,7 +24,7 @@ void APlayerCharacter::BeginPlay()
 
 	check(GEngine != nullptr);
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCharacter."));
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("We are using FPSCharacter."));
 
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -33,6 +34,18 @@ void APlayerCharacter::BeginPlay()
 		}
 	}
 
+	//Spawn a default Gadget
+	if(DefaultGadget)
+	{
+		//Setup default paramaters
+		FActorSpawnParameters Params;
+		Params.Owner = this;
+		AGadget* SpawnedGadget = GetWorld()->SpawnActor<AGadget>(DefaultGadget,Params);
+
+		//Set the transform to the socket and attach it
+		SpawnedGadget->SetActorTransform(GetMesh()->GetSocketTransform(FName("gadget_r")),false,nullptr,ETeleportType::TeleportPhysics);
+		SpawnedGadget->AttachToComponent(GetMesh(),FAttachmentTransformRules::KeepWorldTransform,FName("gadget_r"));
+	}
 }
 
 void APlayerCharacter::Jump(const FInputActionValue& value)

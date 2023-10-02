@@ -64,6 +64,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* SwingAction;
 
+	UPROPERTY(EditDefaultsOnly, Category="Configurations")
+	TSubclassOf<class AGadget> DefaultGadget;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= Gadgets)
 	EGadgets EquipedGadget;
 
