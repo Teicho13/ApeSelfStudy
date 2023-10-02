@@ -13,6 +13,7 @@ APlayerCharacter::APlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	isSwinging = false;
 }
 
 // Called when the game starts or when spawned
@@ -53,6 +54,11 @@ void APlayerCharacter::Move(const FInputActionValue& value)
 	AddMovementInput(rightDirection, movementVector.X);
 }
 
+void APlayerCharacter::Swing(const FInputActionValue& value)
+{
+	isSwinging = true;
+}
+
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
@@ -71,7 +77,15 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Jump);
 		//Directional movement
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
+		//Directional Swing
+		EnhancedInputComponent->BindAction(SwingAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Swing);
+
 	}
 	
+}
+
+bool APlayerCharacter::getIsSwinging()
+{
+	return isSwinging;
 }
 

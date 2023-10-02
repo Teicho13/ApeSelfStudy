@@ -40,12 +40,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	bool getIsSwinging();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	
 	void Jump(const FInputActionValue& value);
 	void Move(const FInputActionValue& value);
+	void Swing(const FInputActionValue& value);
 
 	/* MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -56,8 +60,14 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* MoveAction;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* SwingAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= Gadgets)
 	EGadgets EquipedGadget;
+
+private:
+	bool isSwinging;
 	
 };
