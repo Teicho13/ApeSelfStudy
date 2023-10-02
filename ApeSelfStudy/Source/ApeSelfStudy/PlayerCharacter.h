@@ -43,6 +43,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool getIsSwinging();
 
+	UFUNCTION(BlueprintCallable)
+	void setIsSwinging(bool swings);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

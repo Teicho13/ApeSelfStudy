@@ -2,6 +2,8 @@
 
 
 #include "Gadget.h"
+
+#include "ApeSelfStudy/PlayerCharacter.h"
 #include "Components/CapsuleComponent.h"
 
 AGadget::AGadget()
@@ -29,8 +31,13 @@ void AGadget::OnOverlapBegin(UPrimitiveComponent* OverlapComponent,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
 	bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, TEXT("Overlapp"));
-
+	if(APlayerCharacter* player = Cast<APlayerCharacter>(GetOwner()))
+	{
+		if(player->getIsSwinging())
+		{
+			GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, TEXT("Overlapp"));
+		}
+	}
 }
 
 

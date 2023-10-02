@@ -102,3 +102,8 @@ bool APlayerCharacter::getIsSwinging()
 	return isSwinging;
 }
 
+void APlayerCharacter::setIsSwinging(bool swings)
+{
+	isSwinging = swings;
+}
+
