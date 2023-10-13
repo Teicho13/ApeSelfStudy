@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Gadgets/Gadget.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 // Sets default values
@@ -72,6 +73,19 @@ void APlayerCharacter::Swing(const FInputActionValue& value)
 	isSwinging = true;
 }
 
+void APlayerCharacter::Prone(const FInputActionValue& value)
+{
+	isProning = value.Get<bool>();
+
+	if(isProning)
+	{
+		Crouch();
+	}else
+	{
+		UnCrouch();
+	}
+}
+
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
@@ -92,6 +106,9 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 		//Directional Swing
 		EnhancedInputComponent->BindAction(SwingAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Swing);
+		//Proning / laying down
+		EnhancedInputComponent->BindAction(ProneAction, ETriggerEvent::Started, this, &APlayerCharacter::Prone);
+		EnhancedInputComponent->BindAction(ProneAction, ETriggerEvent::Completed, this, &APlayerCharacter::Prone);
 
 	}
 	
@@ -105,5 +122,15 @@ bool APlayerCharacter::getIsSwinging()
 void APlayerCharacter::setIsSwinging(bool swings)
 {
 	isSwinging = swings;
+}
+
+void APlayerCharacter::SetIsProning(bool proning)
+{
+	isProning = proning;
+}
+
+bool APlayerCharacter::getIsProning()
+{
+	return isProning;
 }
 

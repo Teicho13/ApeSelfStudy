@@ -46,6 +46,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void setIsSwinging(bool swings);
 
+	UFUNCTION(BlueprintCallable)
+	void SetIsProning(bool proning);
+
+	UFUNCTION(BlueprintCallable)
+	bool getIsProning();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -53,6 +59,7 @@ protected:
 	void Jump(const FInputActionValue& value);
 	void Move(const FInputActionValue& value);
 	void Swing(const FInputActionValue& value);
+	void Prone(const FInputActionValue& value);
 
 	/* MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -63,6 +70,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* ProneAction;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* SwingAction;
@@ -75,5 +85,6 @@ protected:
 
 private:
 	bool isSwinging;
+	bool isProning;
 	
 };
